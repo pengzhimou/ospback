@@ -1,0 +1,9 @@
+vendor/
+compilebin/
+log/
+ospback
+vendor/*
+compilebin/*
+log/*
+.idea/
+.idea/*
