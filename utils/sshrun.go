@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"golang.org/x/crypto/ssh"
 	"ospback/logger"
 )
@@ -21,7 +22,10 @@ func SSHRunCMDS(sshClient *ssh.Client, commands []string) {
 	defer CloseSSHClient(sshClient)
 	for _, cmd := range commands {
 		ss, _ := SSHSession(sshClient)
-		SSHRunCMD(ss, cmd)
+		rst, err := SSHRunCMD(ss, cmd)
+		if err != nil {
+			fmt.Printf("%s\n %s\n %s\n", cmd, rst, err)
+		}
 		defer CloseSSHSession(ss)
 	}
 }
