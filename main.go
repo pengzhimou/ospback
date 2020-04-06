@@ -6,7 +6,6 @@ import (
 
 func main() {
 
-
 	var linuxserver1 Server = LinuxOS{
 		OS{
 			"192.168.122.21",
