@@ -41,6 +41,7 @@ func SSHClient(sshHost, sshUser, sshPassword, sshKeyPath string, sshPort int) (*
 
 	addr := fmt.Sprintf("%s:%d", sshHost, sshPort)
 	sshClient, err := ssh.Dial("tcp", addr, config)
+
 	if err != nil {
 		logger.Error("create ssh client fail:", err)
 		defer func() {
@@ -67,10 +68,17 @@ func SSHSession(sshClient *ssh.Client) (*ssh.Session, error) {
 
 func CloseSSHClient(client *ssh.Client) {
 	logger.Warn("ssh client is closing")
-	client.Close()
+	if err := client.Close(); err != nil {
+		fmt.Printf("%T, %s\n", err, err)
+	}
 }
 
 func CloseSSHSession(session *ssh.Session) {
 	logger.Warn("ssh session is closing")
-	session.Close()
+	err := session.Close()
+	if err != nil && fmt.Sprintf("%s", err) == "EOF" {
+		logger.Info("ssh session is closed")
+	} else {
+		logger.Error("ssh session close fail")
+	}
 }

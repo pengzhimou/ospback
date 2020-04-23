@@ -1,1 +1,47 @@
----
+serverconfigs:
+  linux1:
+      ip: "192.168.122.21"
+      conntype:
+        sshconn:
+          username: "root"
+          password: "redhat"
+          sshkeypath: ""
+          port: 22
+        telnetconn:
+          username: "root"
+          password: "redhat"
+          port: 23
+      backuptasks:
+        projbase: "/nfsclient"
+        tasks:
+          vxflexci: "/etc/passwd"
+          extremioci: "/etc/hosts"
+  linux2:
+      ip: "192.168.122.22"
+      conntype:
+        sshconn:
+          username: "root"
+          password: "redhat"
+          sshkeypath: ""
+          port: 22
+        telnetconn:
+          username: "root"
+          password: "redhat"
+          port: 23
+      backuptasks:
+        projbase: "/nfsclient"
+        tasks:
+          vxflexci: "/etc/passwd"
+          extremioci: "/etc/hosts"
+
+bkserverconfigs:
+  nfsserver:
+    username: ""
+    password: ""
+    ip: "192.168.122.21"
+    datastore: "/datastore"
+  sambaserver:
+    username: ""
+    password: ""
+    ip: "192.168.122.51"
+    datastore: "/sambastore"

@@ -1,49 +1,75 @@
 package main
 
 import (
-	. "ospback/cls"
+	"errors"
+	. "ospback/backup"
+	"ospback/logger"
+	"sync"
 )
 
 func main() {
 
-	var linuxserver1 Server = LinuxOS{
-		OS{
-			"192.168.122.21",
-			"root",
-			"redhat",
-			"ssh",
-		},
-		"",
-		22,
+	bksrvyml, err := ReadBKServerYaml("etc/backup.yml")
+	if err != nil {
+		errors.New("yaml fmt not correct!")
+		logger.Error("yaml bkserverconfigs part fmt not correct")
 	}
 
-	var linuxserver1_backup Backup = BackupCMD{
-		ComdDataStore: Command{
-			Cmd: "mount",
-			Opt: "-t nfs",
-		},
-		ComdPrpDir: Command{
-			Cmd: "mkdir",
-			Opt: "-p",
-		},
-		ComdBK: Command{
-			Cmd: "cp",
-			Opt: "-rL",
-		},
-		Backupserver: BackupServer{
-			Os: OS{
-				Ip: "192.168.122.21",
+	srvyml, err := ReadServerYaml("etc/backup.yml")
+	if err != nil {
+		errors.New("yaml fmt not correct!")
+		logger.Error("yaml serverconfigs part fmt not correct")
+	}
+
+	wg := sync.WaitGroup{}
+
+	for _, server := range srvyml.LinuxOsConfig {
+		servertmp := LinuxOS{
+			Ip: server.Ip,
+			Conntp: Conntype{
+				SshCn: SshConn{
+					server.Conntp.SshCn.Username,
+					server.Conntp.SshCn.Password,
+					server.Conntp.SshCn.Keypath,
+					server.Conntp.SshCn.Port,
+				},
+				TelnetCn: TelnetConn{
+					server.Conntp.TelnetCn.Username,
+					server.Conntp.TelnetCn.Password,
+					server.Conntp.TelnetCn.Port,
+				},
 			},
-			Srvtype:   "nfs",        // nfs/samba
-			Datastore: "/datastore", // /datastore/ip/date/dirs
-
-		},
-		Projbase: "/nfsclient",
-		Project:  map[string]string{"vxflexic": "/etc", "xtremioci": "/etc"},
+			Bcktsks: BackupTasks{
+				Projbase: server.Bcktsks.Projbase,
+				//Tasks:    map[string]string{"vxflexcu": "/etc/", "xetea": "/etc/hosts"},
+				Tasks: server.Bcktsks.Tasks,
+			},
+		}
+		backupservertemp := BKServerConfigs{
+			BKSCfgs: BKServerType{
+				NFSSrv: NFSServer{
+					Ip:        bksrvyml.BKSCfgs.NFSSrv.Ip,
+					Password:  bksrvyml.BKSCfgs.NFSSrv.Password,
+					Datastore: bksrvyml.BKSCfgs.NFSSrv.Datastore,
+					Username:  bksrvyml.BKSCfgs.NFSSrv.Username,
+				},
+				SmbSrv: SambaServer{
+					Ip:        bksrvyml.BKSCfgs.SmbSrv.Ip,
+					Password:  bksrvyml.BKSCfgs.SmbSrv.Password,
+					Datastore: bksrvyml.BKSCfgs.SmbSrv.Datastore,
+					Username:  bksrvyml.BKSCfgs.SmbSrv.Username,
+				},
+			},
+		}
+		wg.Add(1)
+		go func() {
+			var server_itf Server
+			server_itf = &servertmp
+			servertmp.Conn()
+			servertmp.NFSMount(server_itf, &backupservertemp.BKSCfgs.NFSSrv)
+			servertmp.NFSBackup(server_itf)
+			wg.Done()
+		}()
 	}
-
-	linuxserver1_backup.PrepDataStore(linuxserver1)
-
-	linuxserver1_backup.PrjBackup(linuxserver1)
-
+	wg.Wait()
 }
