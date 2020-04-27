@@ -3,3 +3,7 @@ compilebin/*
 log/*
 .idea/
 .idea/*
+.vscode
+.vscode/*
+ospback
+ospback.exe
