@@ -7,7 +7,7 @@ import (
 	"sync"
 )
 
-func old() {
+func linuxNfsBackup() {
 	bksrvyml, err := ReadBKServerYaml("etc/backup.yml")
 	if err != nil {
 		errors.New("yaml fmt not correct!")
@@ -61,18 +61,18 @@ func old() {
 			},
 		}
 		wg.Add(1)
-		go func() {
+		go func(prjname string) {
 			var server_itf Server
 			server_itf = &servertmp
 			servertmp.Conn()
 			servertmp.NFSMount(server_itf, &backupservertemp.BKSCfgs.NFSSrv)
-			servertmp.NFSBackup(server_itf, prj)
+			servertmp.NFSBackup(server_itf, prjname)
 			wg.Done()
-		}()
+		}(prj) //注意这里的值传递
 	}
 	wg.Wait()
 }
 
 func main(){
-	old()
+	linuxNfsBackup()
 }

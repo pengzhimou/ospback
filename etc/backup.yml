@@ -4,7 +4,7 @@ serverconfigs:
       conntype:
         sshconn:
           username: "root"
-          password: "h3HGja,s0"
+          password: "xxx"
           sshkeypath: ""
           port: 22
         telnetconn:
@@ -21,7 +21,7 @@ serverconfigs:
       conntype:
         sshconn:
           username: "root"
-          password: "h3HGja,s0"
+          password: "xxx"
           sshkeypath: ""
           port: 22
         telnetconn:

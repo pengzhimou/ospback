@@ -10,15 +10,12 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-//var Jobtime string = time.Now().Format("20060102_150405")
-
 type Server interface {
 	Conn() *ssh.Client
 }
 
 type Backup interface {
 	NFSMount(Server)
-	Prj(Server)
 }
 
 // server part
@@ -139,10 +136,7 @@ func (los *LinuxOS) NFSBackup(srv Server, prj string) {
 		)
 		cmds = append(cmds, cmdmkdir, cmdbackup)
 	}
-	for x,y := range cmds{
-		fmt.Println(x,y)
-	}
-	//utils.SSHRunCMDS(srv.Conn(), cmds)
+	utils.SSHRunCMDS(srv.Conn(), cmds)
 }
 
 func ReadBKServerYaml(path string) (*BKServerConfigs, error) {
