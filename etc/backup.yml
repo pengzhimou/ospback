@@ -4,7 +4,7 @@ serverconfigs:
       conntype:
         sshconn:
           username: "root"
-          password: "xxx"
+          password: "h3HGja,s0"
           sshkeypath: ""
           port: 22
         telnetconn:
@@ -15,13 +15,12 @@ serverconfigs:
         projbase: "/nfsclient"
         tasks:
           fileA: "/tmp/aaa"
-          fileB: "/tmp/bbb"
   linux2:
       ip: "192.168.122.1"
       conntype:
         sshconn:
           username: "root"
-          password: "xxx"
+          password: "h3HGja,s0"
           sshkeypath: ""
           port: 22
         telnetconn:
@@ -31,9 +30,135 @@ serverconfigs:
       backuptasks:
         projbase: "/nfsclient"
         tasks:
-          fileC: "/tmp/ccc"
-          fileD: "/tmp/ddd"
-
+          fileA: "/tmp/bbb"
+  linux3:
+    ip: "192.168.122.1"
+    conntype:
+      sshconn:
+        username: "root"
+        password: "h3HGja,s0"
+        sshkeypath: ""
+        port: 22
+      telnetconn:
+        username: ""
+        password: ""
+        port: 23
+    backuptasks:
+      projbase: "/nfsclient"
+      tasks:
+        fileA: "/tmp/ccc"
+  linux4:
+    ip: "192.168.122.1"
+    conntype:
+      sshconn:
+        username: "root"
+        password: "h3HGja,s0"
+        sshkeypath: ""
+        port: 22
+      telnetconn:
+        username: ""
+        password: ""
+        port: 23
+    backuptasks:
+      projbase: "/nfsclient"
+      tasks:
+        fileA: "/tmp/ddd"
+  linux5:
+    ip: "192.168.122.1"
+    conntype:
+      sshconn:
+        username: "root"
+        password: "h3HGja,s0"
+        sshkeypath: ""
+        port: 22
+      telnetconn:
+        username: ""
+        password: ""
+        port: 23
+    backuptasks:
+      projbase: "/nfsclient"
+      tasks:
+        fileA: "/tmp/eee"
+  linux6:
+    ip: "192.168.122.1"
+    conntype:
+      sshconn:
+        username: "root"
+        password: "h3HGja,s0"
+        sshkeypath: ""
+        port: 22
+      telnetconn:
+        username: ""
+        password: ""
+        port: 23
+    backuptasks:
+      projbase: "/nfsclient"
+      tasks:
+        fileA: "/tmp/fff"
+  linux7:
+    ip: "192.168.122.1"
+    conntype:
+      sshconn:
+        username: "root"
+        password: "h3HGja,s0"
+        sshkeypath: ""
+        port: 22
+      telnetconn:
+        username: ""
+        password: ""
+        port: 23
+    backuptasks:
+      projbase: "/nfsclient"
+      tasks:
+        fileA: "/tmp/ggg"
+  linux8:
+    ip: "192.168.122.1"
+    conntype:
+      sshconn:
+        username: "root"
+        password: "h3HGja,s0"
+        sshkeypath: ""
+        port: 22
+      telnetconn:
+        username: ""
+        password: ""
+        port: 23
+    backuptasks:
+      projbase: "/nfsclient"
+      tasks:
+        fileA: "/tmp/hhh"
+  linux9:
+    ip: "192.168.122.1"
+    conntype:
+      sshconn:
+        username: "root"
+        password: "h3HGja,s0"
+        sshkeypath: ""
+        port: 22
+      telnetconn:
+        username: ""
+        password: ""
+        port: 23
+    backuptasks:
+      projbase: "/nfsclient"
+      tasks:
+        fileA: "/tmp/iii"
+  linux10:
+    ip: "192.168.122.1"
+    conntype:
+      sshconn:
+        username: "root"
+        password: "h3HGja,s0"
+        sshkeypath: ""
+        port: 22
+      telnetconn:
+        username: ""
+        password: ""
+        port: 23
+    backuptasks:
+      projbase: "/nfsclient"
+      tasks:
+        fileA: "/tmp/jjj"
 bkserverconfigs:
   nfsserver:
     username: ""
