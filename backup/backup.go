@@ -2,6 +2,7 @@ package backup
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"ospback/utils"
 	"time"
@@ -127,7 +128,7 @@ func (los *LinuxOS) NFSBackup(srv Server, prj string) {
 			timenow,
 		)
 		cmdbackup := fmt.Sprintf(
-			"cp -rL %s %s/%s/%s/%s/%s",
+			"cp -r %s %s/%s/%s/%s/%s",
 			loc,
 			los.Bcktsks.Projbase,
 			prj,
@@ -150,6 +151,13 @@ func ReadBKServerYaml(path string) (*BKServerConfigs, error) {
 	return conf, nil
 }
 
+func ReadBKServerYaml2(path string) (*BKServerConfigs, error) {
+	data, _ := ioutil.ReadFile(path)
+	conf := &BKServerConfigs{}
+	yaml.Unmarshal(data, &conf)
+	return conf, nil
+}
+
 func ReadServerYaml(path string) (*ServerConfigs, error) {
 	conf := &ServerConfigs{}
 	if f, err := os.Open(path); err != nil {
@@ -157,5 +165,12 @@ func ReadServerYaml(path string) (*ServerConfigs, error) {
 	} else {
 		yaml.NewDecoder(f).Decode(conf)
 	}
+	return conf, nil
+}
+
+func ReadServerYaml2(path string) (*ServerConfigs, error) {
+	data, _ := ioutil.ReadFile(path)
+	conf := &ServerConfigs{}
+	yaml.Unmarshal(data, &conf)
 	return conf, nil
 }
