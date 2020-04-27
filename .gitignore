@@ -3,3 +3,5 @@ compilebin/*
 log/*
 .idea/
 .idea/*
+.vscode
+.vscode/*
