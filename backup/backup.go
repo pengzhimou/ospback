@@ -115,7 +115,7 @@ func (los *LinuxOS) NFSMount(srv Server, nfssrv *NFSServer) {
 
 func (los *LinuxOS) NFSBackup(srv Server, prj string) {
 	cmds := []string{}
-
+	timenow := fmt.Sprintf(time.Now().Format("20060102_150405"))
 	for task, loc := range los.Bcktsks.Tasks {
 		cmdmkdir := fmt.Sprintf(
 			"mkdir -p %s/%s/%s/%s/%s",
@@ -123,7 +123,7 @@ func (los *LinuxOS) NFSBackup(srv Server, prj string) {
 			prj,
 			los.Ip,
 			task,
-			fmt.Sprintf(time.Now().Format("20060102_150405")),
+			timenow,
 		)
 		cmdbackup := fmt.Sprintf(
 			"cp -rL %s %s/%s/%s/%s/%s",
@@ -132,7 +132,7 @@ func (los *LinuxOS) NFSBackup(srv Server, prj string) {
 			prj,
 			los.Ip,
 			task,
-			fmt.Sprintf(time.Now().Format("20060102_150405")),
+			timenow,
 		)
 		cmds = append(cmds, cmdmkdir, cmdbackup)
 	}
