@@ -4,35 +4,35 @@ serverconfigs:
       conntype:
         sshconn:
           username: "root"
-          password: "xxxxx"
+          password: "h3HGja,s0"
           sshkeypath: ""
           port: 22
         telnetconn:
-          username: "root"
-          password: "redhat"
+          username: ""
+          password: ""
           port: 23
       backuptasks:
         projbase: "/nfsclient"
         tasks:
-          vxflexci: "/etc/passwd"
-          extremioci: "/etc/hosts"
+          fileA: "/tmp/aaa"
+          fileB: "/tmp/bbb"
   linux2:
       ip: "192.168.122.1"
       conntype:
         sshconn:
           username: "root"
-          password: "xxxxx"
+          password: "h3HGja,s0"
           sshkeypath: ""
           port: 22
         telnetconn:
-          username: "root"
-          password: "redhat"
+          username: ""
+          password: ""
           port: 23
       backuptasks:
         projbase: "/nfsclient"
         tasks:
-          vxflexci: "/etc/passwd"
-          extremioci: "/etc/hosts"
+          fileC: "/tmp/ccc"
+          fileD: "/tmp/ddd"
 
 bkserverconfigs:
   nfsserver:

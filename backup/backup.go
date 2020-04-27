@@ -17,7 +17,7 @@ type Server interface {
 
 type Backup interface {
 	NFSMount(Server)
-	PrjBackup(Server)
+	Prj(Server)
 }
 
 // server part
@@ -111,57 +111,33 @@ func (los *LinuxOS) NFSMount(srv Server, nfssrv *NFSServer) {
 	utils.SSHRunCMDS(srv.Conn(), cmds)
 }
 
-//func (los *LinuxOS) NFSBackup(srv Server) {
-//	cmds := []string{}
-//
-//	for task, loc := range los.Bcktsks.Tasks {
-//		cmdmkdir := fmt.Sprintf(
-//			"mkdir -p %s/%s/%s/%s",
-//			los.Bcktsks.Projbase,
-//			los.Ip,
-//			task,
-//			fmt.Sprintf(time.Now().Format("20060102_150405")),
-//		)
-//		cmdbackup := fmt.Sprintf(
-//			"cp -rL %s %s/%s/%s/%s",
-//			loc,
-//			los.Bcktsks.Projbase,
-//			los.Ip,
-//			task,
-//			fmt.Sprintf(time.Now().Format("20060102_150405")),
-//		)
-//		cmds = append(cmds, cmdmkdir, cmdbackup)
-//	}
-//	utils.SSHRunCMDS(srv.Conn(), cmds)
-//}
-
-func (sc *ServerConfigs) NFSBackup(srv Server) {
+func (los *LinuxOS) NFSBackup(srv Server, prj string) {
 	cmds := []string{}
 
-	for projname, los := range sc.LinuxOsConfig {
-		for task, loc := range los.Bcktsks.Tasks {
-			cmdmkdir := fmt.Sprintf(
-				"sudo mkdir -p %s/%s/%s/%s/%s",
-				los.Bcktsks.Projbase,
-				projname,
-				los.Ip,
-				task,
-				fmt.Sprintf(time.Now().Format("20060102_150405")),
-			)
-			cmdbackup := fmt.Sprintf(
-				"sudo cp -r %s %s/%s/%s/%s/%s",
-				loc,
-				los.Bcktsks.Projbase,
-				projname,
-				los.Ip,
-				task,
-				fmt.Sprintf(time.Now().Format("20060102_150405")),
-			)
-			cmds = append(cmds, cmdmkdir, cmdbackup)
-		}
+	for task, loc := range los.Bcktsks.Tasks {
+		cmdmkdir := fmt.Sprintf(
+			"mkdir -p %s/%s/%s/%s/%s",
+			los.Bcktsks.Projbase,
+			prj,
+			los.Ip,
+			task,
+			fmt.Sprintf(time.Now().Format("20060102_150405")),
+		)
+		cmdbackup := fmt.Sprintf(
+			"cp -rL %s %s/%s/%s/%s/%s",
+			loc,
+			los.Bcktsks.Projbase,
+			prj,
+			los.Ip,
+			task,
+			fmt.Sprintf(time.Now().Format("20060102_150405")),
+		)
+		cmds = append(cmds, cmdmkdir, cmdbackup)
 	}
-	utils.SSHRunCMDS(srv.Conn(), cmds)
-
+	for x,y := range cmds{
+		fmt.Println(x,y)
+	}
+	//utils.SSHRunCMDS(srv.Conn(), cmds)
 }
 
 func ReadBKServerYaml(path string) (*BKServerConfigs, error) {
