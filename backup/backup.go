@@ -2,11 +2,12 @@ package backup
 
 import (
 	"fmt"
-	"golang.org/x/crypto/ssh"
-	"gopkg.in/yaml.v2"
 	"os"
 	"ospback/utils"
 	"time"
+
+	"golang.org/x/crypto/ssh"
+	"gopkg.in/yaml.v2"
 )
 
 //var Jobtime string = time.Now().Format("20060102_150405")
@@ -101,13 +102,17 @@ func (los *LinuxOS) NFSMount(srv Server, nfssrv *NFSServer) {
 		"mkdir -p %s",
 		los.Bcktsks.Projbase,
 	)
+	cmdcleanstalefile := fmt.Sprintf(
+		"umount -lf %s > /dev/null 2>&1",
+		los.Bcktsks.Projbase,
+	)
 	cmdmount := fmt.Sprintf(
 		"mount -t nfs %s:%s %s",
 		nfssrv.Ip,
 		nfssrv.Datastore,
 		los.Bcktsks.Projbase,
 	)
-	cmds = append(cmds, cmdmkdir, cmdmount)
+	cmds = append(cmds, cmdmkdir, cmdcleanstalefile, cmdmount)
 	utils.SSHRunCMDS(srv.Conn(), cmds)
 }
 
