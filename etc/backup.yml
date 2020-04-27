@@ -1,10 +1,10 @@
 serverconfigs:
   linux1:
-      ip: "192.168.122.21"
+      ip: "192.168.122.1"
       conntype:
         sshconn:
           username: "root"
-          password: "redhat"
+          password: "xxxxx"
           sshkeypath: ""
           port: 22
         telnetconn:
@@ -17,11 +17,11 @@ serverconfigs:
           vxflexci: "/etc/passwd"
           extremioci: "/etc/hosts"
   linux2:
-      ip: "192.168.122.22"
+      ip: "192.168.122.1"
       conntype:
         sshconn:
           username: "root"
-          password: "redhat"
+          password: "xxxxx"
           sshkeypath: ""
           port: 22
         telnetconn:
@@ -38,8 +38,8 @@ bkserverconfigs:
   nfsserver:
     username: ""
     password: ""
-    ip: "192.168.122.21"
-    datastore: "/datastore"
+    ip: "192.168.122.1"
+    datastore: "/nfs/data"
   sambaserver:
     username: ""
     password: ""
